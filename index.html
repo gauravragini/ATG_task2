@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="     sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+  <link rel="stylesheet" href="ATG_t2.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+</head>
+
+<body>
+  <button id="myBtn">Click here</button>
+
+  <div id="modal1" class="modal">
+    <div class="content">
+      <div class="header">
+        <i class="fas fa-times fa-lg" id="close"></i>
+        <span class=h>Event Type</span>  
+      </div>
+      <div class="body">
+        <p>Paid-event or free-event?</p>
+        <form class="customRadio" id="form1">
+          <div id="divpaid" class="icon">
+            <input type="radio" id="paid" name="event" value="paid">
+            <label for="paid"><img src="1.png"><br>PAID</label>
+          </div>
+          <div id="divfree" class="icon">
+            <input type="radio" name="event" value="free" id="free">
+            <label for="free"><img src="2.png"><br>FREE</label>
+          </div>
+        </form>
+      </div>
+      <div class="footer">
+        <button id="next" disabled="true">Next &nbsp;&nbsp;<i class="fas fa-arrow-right"></i></button>
+      </div>
+    </div>
+  </div>
+
+  <div id="modal2" class="modal">
+    <div class="content">
+      <div class="header">
+        <i class="fas fa-arrow-left" onclick="back2()"></i>
+        <span class=h>Paid Event</span>  
+      </div>
+      <div class="body">
+        <p>Single-cost event or multiple-cost event?
+          <span class="tooltip">
+            <i class="fas fa-info-circle" style="color:#666"></i>
+            <span class="tooltiptext">This is a tooltip. Use it to show if there is any help text.</span>
+          </span>
+        </p>
+        <form class="customRadio" id="form2">
+          <div id="divsingle" class="icon">
+            <input type="radio" name="paid"  id="single" value="single">
+            <label for="single"><img src="3.png"><br>SINGLE COST</label>
+          </div>
+          <div id="divmultiple" class="icon" >
+            <input type="radio" name="paid" id="multiple" value="multiple">
+            <label for="multiple"><img src="4.png"><br>MULTIPLE COST</label>
+          </div>
+        </form>
+      </div>
+      <div class="footer">       
+      </div>
+    </div>
+  </div>
+
+  <div id="modal3" class="modal">
+    <div class="content">
+      <div class="header">
+        <i class="fas fa-arrow-left" onclick="back3()" ></i>
+        <span class=h>Free Event</span>  
+      </div>
+      <div class="body">
+        <p>musical or dance events? 
+        <form>
+          <div class="icon">
+            <input type="radio" name="music"  id="music">
+            <label for="music"><br>MUSIC</label>
+          </div>
+          <div class="icon">
+            <input type="radio" name="music" id="dance">
+            <label for="dance"><br>DANCE</label>
+          </div>
+        </form>
+      </div>
+      <div class="footer">       
+      </div>  
+    </div>
+  </div>
+
+</body>
+
+<script>
+  $(document).ready(function(){
+    
+    /*opening of modal on clicking button*/
+    $("#myBtn").click(function(){
+      $("#modal1").show();
+    });
+
+    /*closing of modal on clicking cross*/
+    $("#close").click(function(){
+      $("#modal1").hide();
+    });
+
+    /*selecting radio button from event modal*/
+    $('#form1').on('change',function(){
+      
+      $('#next').attr('disabled',false);/*defreeezing of next button*/
+      $('#next').css('opacity',1);
+
+      /*if selected radio button is for paid event*/
+      if( $('input[name=event]:checked','#form1').val()=="paid"){
+        
+        $('#divfree').removeClass("selected");
+        $('#divpaid').addClass("selected");
+          
+        /*opening of paid modal on clicking next button*/
+        $("#next").click(function(){
+            $("#modal1").hide();
+            $("#modal3").hide();
+            $("#modal2").show();
+            });
+      }
+
+       /*if selected radio button is for free event*/
+      if( $('input[name=event]:checked','#form1').val()=="free"){
+
+        $('#divpaid').removeClass("selected");
+        $('#divfree').addClass("selected");
+         
+        /*opening of free event modal on clicking next button*/
+        $("#next").click(function(){
+          $("#modal3").show();
+          $("#modal2").hide();
+          $("#modal1").hide();
+          });
+       }
+
+    });
+
+    /*selecting radio button from paid modal*/
+    $('#form2').on('change',function(){
+      if( $('input[name=paid]:checked','#form2').val() =="single"){
+        $('#divmultiple').removeClass("selected");
+        $('#divsingle').addClass("selected");
+      }
+          
+      if( $('input[name=paid]:checked','#form2').val() =="multiple"){
+        $('#divsingle').removeClass("selected");
+        $('#divmultiple').addClass("selected");
+      }
+    });
+  });
+  
+    /*going back to first modal on clicking back arrow*/
+  function back2(){
+    var back= document.getElementById("back");
+    modal2.style.display = "none";
+    modal3.style.display = "none";
+    modal1.style.display = "block";  
+  }
+
+  /*going back to first modal on clicking back arrow*/
+  function back3(){
+   var back= document.getElementById("back");
+      modal3.style.display = "none";
+      modal2.style.display = "none";
+      modal1.style.display = "block";  
+  }
+</script>
+
+</html>
